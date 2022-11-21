@@ -1,0 +1,106 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class Stationary {
+
+    private String productName;
+    private int quantity;
+    private double Amount;
+    private double totalAmount;
+
+
+    Stationary(String productName, int quantity,
+               double Amount, double totalAmount) {
+        this.productName = productName;
+        this.quantity = quantity;
+        this.Amount = Amount;
+        this.totalAmount = totalAmount;
+    }
+
+    // getter methods 
+    
+    public String getProductName() {
+        return productName;
+    }
+    public int getQuantity() {
+        return quantity;
+    }
+    public double getAmount() {
+        return Amount;
+    }
+    public double getTotalAmount() {
+        return totalAmount;
+    }
+
+    // display the details of shopping in a format
+    public static void displayFormat() {
+        System.out.print(
+                "\nName      Quantity    Price   Total Price\n");
+    }
+
+
+    public void display() {
+        System.out.format("%-9s %8d %10.2f %10.2f\n",
+                productName, quantity, Amount, totalAmount);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+
+        String productName = null;
+        int quantity = 0;
+        double price = 0.0;
+        double totalPrice = 0.0;
+        double finalAmount = 0.0;
+        char choice = '\0';
+
+
+        Scanner scan = new Scanner(System.in);
+
+        List<Stationary> product = new ArrayList<Stationary>();
+
+        do {
+
+            System.out.println("Enter product details,");
+            System.out.print("Name: ");
+            productName = scan.nextLine();
+            System.out.print("Quantity: ");
+            quantity = scan.nextInt();
+            System.out.print("Price (per item): ");
+            price = scan.nextDouble();
+
+
+            totalPrice = price * quantity;
+
+
+            finalAmount += totalPrice;
+
+
+            product.add( new Stationary(
+                    productName, quantity, price, totalPrice) );
+
+            // to continue purchasing enter y
+            System.out.print("Want to add more item? (y or n): ");
+            choice = scan.next().charAt(0);
+
+
+            scan.nextLine();
+        
+            // check if choice is y then continue to loop
+        } while (choice == 'y' || choice == 'Y');
+
+        // display the bill in format
+        Stationary.displayFormat();
+        for (Stationary p : product) {
+            p.display();
+        }
+
+        // print total amount
+        System.out.println("\nTotal Price = " + finalAmount);
+
+    }
+
+}
